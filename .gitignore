@@ -129,3 +129,11 @@ dmypy.json
 .pyre/
 .DS_Store
 projects/.DS_Store
+install/create_virtual_env.sh
+install/git_config.sh
+install/install_requirements.sh
+install/SSH-miw
+install/SSH-miw.pub
+install/SSH-miw.rtf
+install/pip/no_conda.txt
+install/pip/requirements.txt
