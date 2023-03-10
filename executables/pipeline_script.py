@@ -69,10 +69,10 @@ df3 = df.copy() #keep original for df3
 ### CLEANING for DF1 ### drop NA, drop duplicates, convert types to float64
 ########################
 
-df = df.dropna()
-
 df = df.apply(lambda x: pd.to_numeric(x, errors='coerce') if x.dtype == 'object' else x)
 df = df.apply(lambda x: pd.astype('float64') if x.dtype == 'object' else x)
+
+df = df.dropna()
 
 df.to_sql('df1',if_exists='replace',con=dbConnection)
 print('Generated DF1: succesfully written to SQL database')
