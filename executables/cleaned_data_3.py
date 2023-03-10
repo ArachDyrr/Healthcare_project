@@ -28,7 +28,7 @@ df = df.apply(lambda x: pd.astype('float64') if x.dtype == 'object' else x)
 
 
 # add the New Feature BMI (kg/m^2) we do this before the rest of the manipulations 
-df['bmi'] = df['mass']/(df['length']/100)**2
+df['bmi'] = round(df['mass']/(df['length']/100)**2,1)
 
 ## the IQR clipping for outliers 
 # Computing IQR
