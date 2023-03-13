@@ -19,3 +19,8 @@ jupyterthemes==0.20.0
 matplotlib
 matplotlib-inline
 numpy
+pandas
+sklearn
+# sqlite3
+requests
+# logging
