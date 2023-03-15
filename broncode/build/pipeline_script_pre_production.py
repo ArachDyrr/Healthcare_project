@@ -78,54 +78,54 @@ df['bmi'] = round(df['mass'] / (df['length'] / 100) ** 2, 1)
 
 
 
-########################
-### DF1 Base Dataset ### 
-########################
+# ########################
+# ### DF1 Base Dataset ### 
+# ########################
 
-# Create dataframe df1
-df1 = df.drop(['bmi'], axis=1).copy()
+# # Create dataframe df1
+# df1 = df.drop(['bmi'], axis=1).copy()
 
-# save to SQLlite
-df1.to_sql('df1', if_exists='replace', con=dbConnection)
-print('Generated DF1: successfully written to SQL database')
-df1.to_csv('df1.csv')
-print('Generated DF1: successfully written to df1.csv')
+# # save to SQLlite
+# df1.to_sql('df1', if_exists='replace', con=dbConnection)
+# print('Generated DF1: successfully written to SQL database')
+# df1.to_csv('df1.csv')
+# print('Generated DF1: successfully written to df1.csv')
 
-############################
-### DF2 Enhanced Dataset ### add feature 'bmi'
-############################
+# ############################
+# ### DF2 Enhanced Dataset ### add feature 'bmi'
+# ############################
 
-# Create dataframe df2
-df2=df.copy()
+# # Create dataframe df2
+# df2=df.copy()
 
-# save to SQLlite
-df2.to_sql('df2', if_exists='replace', con=dbConnection)
-print('Generated DF2: successfully written to SQL database')
-df2.to_csv('df2.csv')
-print('Generated DF2: successfully written to df2.csv')
+# # save to SQLlite
+# df2.to_sql('df2', if_exists='replace', con=dbConnection)
+# print('Generated DF2: successfully written to SQL database')
+# df2.to_csv('df2.csv')
+# print('Generated DF2: successfully written to df2.csv')
 
-#############################
-### DF3 Clipping Outliers ### outliers IQR method clipped, bmi feature
-############################# 
+# #############################
+# ### DF3 Clipping Outliers ### outliers IQR method clipped, bmi feature
+# ############################# 
 
-# create df3
-df3 = df.copy()
+# # create df3
+# df3 = df.copy()
 
-## the IQR clipping for outliers 
-# Computing IQR
-Q1 = df3.quantile(0.25)
-Q3 = df3.quantile(0.75)
-IQR = Q3 - Q1
+# ## the IQR clipping for outliers 
+# # Computing IQR
+# Q1 = df3.quantile(0.25)
+# Q3 = df3.quantile(0.75)
+# IQR = Q3 - Q1
 
-# Clipping the IQR*|15.*IQD|
-mean = df3.mean()
-df3 = df3.clip(lower=mean - 1.5 * IQR, upper=mean + 1.5 * IQR, axis=1)
+# # Clipping the IQR*|15.*IQD|
+# mean = df3.mean()
+# df3 = df3.clip(lower=mean - 1.5 * IQR, upper=mean + 1.5 * IQR, axis=1)
 
-# save to SQLlite
-df3.to_sql('df3', if_exists='replace', con=dbConnection)
-print('Generated DF3: succesfully written to SQL database')
-df3.to_csv('df3.csv')
-print('Generated DF3: succesfully written to df3.csv')
+# # save to SQLlite
+# df3.to_sql('df3', if_exists='replace', con=dbConnection)
+# print('Generated DF3: succesfully written to SQL database')
+# df3.to_csv('df3.csv')
+# print('Generated DF3: succesfully written to df3.csv')
 
 
 ########################
@@ -151,37 +151,37 @@ print('Generated DF4: succesfully written to SQL database')
 df4.to_csv('df4.csv')
 print('Generated DF4: succesfully written to df4.csv')
 
-#################################### uncut 'lifespan','mass'
-### DF5 cut outliers significant ### cut 'genetic','exercise','smoking','alcohol','bmi'
-#################################### unused 'length'
+# #################################### uncut 'lifespan','mass'
+# ### DF5 cut outliers significant ### cut 'genetic','exercise','smoking','alcohol','bmi'
+# #################################### unused 'length'
 
-# create df5 with lifespan and mass. length because they are not significant. Pearsons p_value > 0.05
-df5 = df[['lifespan','mass']].copy()
+# # create df5 with lifespan and mass. length because they are not significant. Pearsons p_value > 0.05
+# df5 = df[['lifespan','mass']].copy()
 
-# create df_cut
-df_cut = df.copy()
+# # create df_cut
+# df_cut = df.copy()
 
-## the IQR clipping for outliers 
-# Computing IQR
-Q1 = df_cut.quantile(0.25)
-Q3 = df_cut.quantile(0.75)
-IQR = Q3 - Q1
+# ## the IQR clipping for outliers 
+# # Computing IQR
+# Q1 = df_cut.quantile(0.25)
+# Q3 = df_cut.quantile(0.75)
+# IQR = Q3 - Q1
 
-# cutting the IQR*|15.*IQD|
-df_cut = df_cut[~((df_cut < (Q1 - 1.5 * IQR)) |(df_cut > (Q3 + 1.5 * IQR))).any(axis=1)]
-df_cut = df_cut[['genetic','exercise','smoking','alcohol','bmi']]
+# # cutting the IQR*|15.*IQD|
+# df_cut = df_cut[~((df_cut < (Q1 - 1.5 * IQR)) |(df_cut > (Q3 + 1.5 * IQR))).any(axis=1)]
+# df_cut = df_cut[['genetic','exercise','smoking','alcohol','bmi']]
 
-# Join df_cut with df5 
-df5 = df5.join(df_cut)
+# # Join df_cut with df5 
+# df5 = df5.join(df_cut)
 
-# remove NaN
-df5 = df5.dropna()
+# # remove NaN
+# df5 = df5.dropna()
 
-# save to SQLlite
-df5.to_sql('df5', if_exists='replace', con=dbConnection)
-print('Generated DF5: succesfully written to SQL database')
-df5.to_csv('df5.csv')
-print('Generated DF5: succesfully written to df5.csv')
+# # save to SQLlite
+# df5.to_sql('df5', if_exists='replace', con=dbConnection)
+# print('Generated DF5: succesfully written to SQL database')
+# df5.to_csv('df5.csv')
+# print('Generated DF5: succesfully written to df5.csv')
 
 
 
