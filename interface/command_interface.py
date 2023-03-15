@@ -49,14 +49,30 @@ bmi = round(mass/divider)
 
 # lifespan_predict = reg.predict([[genetic, length, mass, alcohol, sugar, smoking, exercise, bmi]])
 # print(lifespan_predict)
-df_input= pd.DataFrame({input_1 : [genetic, length, mass, alcohol, sugar, smoking, exercise, bmi]})
-print (df_input)
+# df = pd.DataFrame(data=[pi, e, phi])
+# df_input= pd.DataFrame(data=['genetic', 'length', 'mass', 'alcohol', 'sugar', 'smoking', 'exercise', 'bmi'], [genetic, length, mass, alcohol, sugar, smoking, exercise, bmi])
+# print (df_input.head)
 # input= [genetic, length, mass, alcohol, sugar, smoking, exercise, bmi]
 # print (input)
+# Python code demonstrate creating
+# DataFrame from dict narray / lists
+# By default addresses.
+  
 
-model = df['coef']
+  
+# initialize data of lists.
+data = {'feature': ['genetic', 'length', 'mass', 'alcohol', 'sugar', 'smoking', 'exercise', 'bmi'],
+        'input_1': [genetic, length, mass, alcohol, sugar, smoking, exercise, bmi]}
+  
+# Create DataFrame
+df_input = pd.DataFrame(data)
+  
+# Print the output.
+print(df_input)
 
-print (type(input[0]))
-# lifespan_predicted = 8.333 +input[0]*1
-lifespan_predicted = round(df['intercept'][0]+input[0]*model[0]+input[1]*model[1]+input[2]*model[2]+input[3]*model[3]+input[4]*model[4]+input[5]*model[5]+input[6]*model[6]+input[7]*model[7],1)
+
+# multiply the rows of df and df_input for the relevant row. add the interceptor where the data crosses the y-axis. 
+lifespan_predicted = sum(df_input['input_1'].multiply(df['coef'])),1)+ round(df['intercept'][0] + 
+
 print(f'the predicted lifespan is: {lifespan_predicted}')
+
