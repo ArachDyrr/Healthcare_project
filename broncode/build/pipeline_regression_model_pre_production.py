@@ -60,16 +60,13 @@ coef = regr.coef_
 intercept = regr.intercept_
 
 #Store variables in SQL table
-dbConnection = sqlite3.connect('db.sqlite3')
 dfdrop = df.drop(columns=['lifespan'])
 df_coef = pd.DataFrame({'feature':dfdrop.columns,'coef': coef,'intercept': intercept,'rsquared':score,'rmse':rmse})
 df_coef.to_sql('coef', if_exists='replace', con=dbConnection)
-
+print('Generated coef: succesfully written to SQL database')
 
 #pickle.dump(regressor,open(exportFile,'wb'))
 
 dbConnection.close()
-
-
 
 
