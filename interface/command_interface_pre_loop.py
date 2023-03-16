@@ -46,12 +46,6 @@ else:
     print ('No data will be saved this session')
 
 
-
-
-
-
-# input safeguarding
-
 #hide errors, scary for the user xD
 sys.tracebacklimit = 0 
 
@@ -76,51 +70,11 @@ def inputDigit(message, acceptableRange):
                 return inputNum
 
         i += 1
+        if i == 3:
+            raise Exception("Number of incorrect inputs has been exceded. Programe will quit. It can be started again.")
 
     return None
-# acceptableRange = range(0, 200)
-# age = int(inputDigit("Age [18 - 118]: ", acceptableRange))
-# logging.debug(f"age : {age}")
 
-# acceptableRange_genetic = range(50,121)
-# acceptableRange_length = range(140,221)
-# acceptableRange_mass = range(40,171)
-# acceptableRange_alcohol = range(0,21)
-# acceptableRange_sugar = range(0,21)
-# acceptableRange_smoking = range(0,41)
-# acceptableRange_exercise = range(0,9)
-
-# genetic = int(inputDigit("Genetic age in years [50 - 120]: ", acceptableRange_genetic))
-# length = int(inputDigit("Length in cm [140 - 220]: ", acceptableRange_length))
-# mass = int(inputDigit("Mass in kg [40 - 170]: ", acceptableRange_mass))
-# alcohol = int(inputDigit("Alcohol consumption in glasses per day [0 - 20]: ", acceptableRange_alcohol))
-# sugar = int(inputDigit("sugar consumption in cubes per day [0 - 20]: ", acceptableRange_sugar))
-# smoking = int(inputDigit("Smoking in sigarettes per day [0 - 40]: ", acceptableRange_smoking))
-# exercise = int(inputDigit("Exercise in hours per day [0 - 8]: ", acceptableRange_exercise))
-# divider = pow(length/100, 2) if length >0 else None
-# bmi = round(mass/divider)
-# logging.debug(f'bmi: {bmi}')
-
-# genetic = int(77)
-# length = int(177) 
-# mass = int(77)
-# alcohol = int(2)
-# sugar = int(2)
-# smoking = int(2)
-# exercise = int(2)
-# divider = pow(length/100, 2) if length >0 else None
-# bmi = round(mass/divider)
-
-# # lifespan_predict = reg.predict([[genetic, length, mass, alcohol, sugar, smoking, exercise, bmi]])
-# # print(lifespan_predict)
-# # df = pd.DataFrame(data=[pi, e, phi])
-# # df_input= pd.DataFrame(data=['genetic', 'length', 'mass', 'alcohol', 'sugar', 'smoking', 'exercise', 'bmi'], [genetic, length, mass, alcohol, sugar, smoking, exercise, bmi])
-# # print (df_input.head)
-# # input= [genetic, length, mass, alcohol, sugar, smoking, exercise, bmi]
-# # print (input)
-# # Python code demonstrate creating
-# # DataFrame from dict narray / lists
-# # By default addresses.
   
 # create df_q to have the values for the input questions to be asked. 
 data_questions = {'feature': ['genetic', 'length', 'mass', 'alcohol', 'sugar', 'smoking', 'exercise'],
@@ -138,10 +92,17 @@ def input_q(name):
     min,max, per = df_q.loc[df_q['feature'] == name, ['acc_min','acc_max', 'per']].values[0]
     return int(inputDigit(f"Please enter, {name} {per} in the range: {min}-{max-1} ", range(min,max)))
     
-# print()
-# genetic='genetic'
-# test = input_q (genetic)
-# print (test)
+# # test lines. 
+# genetic = 77
+# length = 177
+# mass = 77
+# alcohol = 2
+# sugar = 2
+# smoking = 2
+# exercise = 2
+# divider = pow(length/100, 2) if length >0 else None
+# bmi = round(mass/divider)
+# logging.debug(f'bmi: {bmi}')
 
 genetic = input_q ('genetic')
 length = input_q ('length')
@@ -160,10 +121,6 @@ data = {'feature': ['genetic', 'length', 'mass', 'alcohol', 'sugar', 'smoking', 
   
 # Create DataFrame
 df_input = pd.DataFrame(data)
-  
-# # Print the output.
-# print(df_input)
-
 
 
 # multiply the rows of df and df_input for the relevant row. add the interceptor where the data crosses the y-axis. 
@@ -182,5 +139,83 @@ if gdpr_check == 'Yes':
 
     df_to_SQL = pd.DataFrame(data_to_save)
 
-    print (df_to_SQL)
+    # print (df_to_SQL)
+
 # df_save_to_SQLlite = 
+############## nog bouwen!!!!!!!!!!
+
+# transpose df input for finish function
+# df_input=df_input.transpose()
+
+# print(df_input)
+# df_input['predicted_lifespan']=[lifespan_predicted]
+
+def finised ():
+    end_programme = input('press any key to show all results and exit the programme.')
+    print (df_input)
+    return quit()
+
+
+
+
+
+# 2nd round of questions
+round_2 = input('If you want to see what happens to predicted life expectancy if the patient changes their habits. Type Yes : ').title()
+
+if round_2 != 'Yes':
+    finised() 
+   
+
+
+# ask the relevant changable questions again. 
+mass = input_q ('mass')
+alcohol = input_q ('alcohol')
+sugar = input_q ('sugar')
+smoking = input_q ('smoking')
+exercise = input_q ('exercise')
+divider = pow(length/100, 2) if length >0 else None
+bmi = round(mass/divider)
+logging.debug(f'bmi: {bmi}')
+
+
+# use results to create new df column with original and ammended data. 
+df_input['input_2'] = [genetic, length, mass, alcohol, sugar, smoking, exercise, bmi]
+
+
+# multiply the rows of df and df_input for the relevant row. add the interceptor where the data crosses the y-axis. 
+lifespan_predicted2 = int(sum(df_input['input_2'].multiply(df['coef']))+ df['intercept'][0])
+#df_input['predicted_lifespan']=[lifespan_predicted,lifespan_predicted2]
+print(f'Your 1st predicted lifespan is:: {lifespan_predicted}')
+print(f'Your 2nd predicted lifespan is: {lifespan_predicted2}')
+
+# 3rd round of questions
+round_3 = input('If you want to see what happens to predicted life expectancy if the patient changes their habits. Type Yes : ').title()
+
+if round_3 != 'Yes':
+    finised()
+
+
+# ask the relevant changable questions again. 
+mass = input_q ('mass')
+alcohol = input_q ('alcohol')
+sugar = input_q ('sugar')
+smoking = input_q ('smoking')
+exercise = input_q ('exercise')
+divider = pow(length/100, 2) if length >0 else None
+bmi = round(mass/divider)
+logging.debug(f'bmi: {bmi}')
+
+
+# use results to create new df column with original and ammended data. 
+df_input['input_3'] = [genetic, length, mass, alcohol, sugar, smoking, exercise, bmi]
+
+# multiply the rows of df and df_input for the relevant row. add the interceptor where the data crosses the y-axis. 
+lifespan_predicted3 = int(sum(df_input['input_3'].multiply(df['coef']))+ df['intercept'][0])
+# df_input['predicted_lifespan']=[lifespan_predicted,lifespan_predicted2,lifespan_predicted3]
+print(f'Your 1st predicted lifespan is:: {lifespan_predicted}')
+print(f'Your 2nd predicted lifespan is: {lifespan_predicted2}')
+print(f'Your 3nd predicted lifespan is: {lifespan_predicted3}')
+
+# end programme
+
+finised()
