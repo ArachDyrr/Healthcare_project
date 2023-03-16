@@ -55,7 +55,9 @@ else:
 #hide errors, scary for the user xD
 sys.tracebacklimit = 0 
 
-# function to force the imput to be acceptable integers
+# input safeguarding
+
+
 def inputDigit(message, acceptableRange):
     inputStr = str()
     withinRange = False
@@ -73,16 +75,9 @@ def inputDigit(message, acceptableRange):
             if inputNum in acceptableRange:
                 return inputNum
 
-            else:
-                    print('not in range:', acceptableRange)
-        else:
-            print('only whole numbers accepted')
-            i += 1
+        i += 1
 
-        # explain why the program exits
-        if i == 3: 
-            raise Exception("\nToo many tries, restart program to try again.")
-
+    return None
 # acceptableRange = range(0, 200)
 # age = int(inputDigit("Age [18 - 118]: ", acceptableRange))
 # logging.debug(f"age : {age}")
