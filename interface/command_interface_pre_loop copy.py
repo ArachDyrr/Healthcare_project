@@ -114,12 +114,10 @@ exercise = input_q ('exercise')
 divider = pow(length/100, 2) if length >0 else None
 bmi = round(mass/divider)
 logging.debug(f'bmi: {bmi}')
-
-input_nr = 1
-
+  
 # initialize data of lists.
 data = {'feature': ['genetic', 'length', 'mass', 'alcohol', 'sugar', 'smoking', 'exercise', 'bmi'],
-        f'input_{input_nr}': [genetic, length, mass, alcohol, sugar, smoking, exercise, bmi]}
+        'input_1': [genetic, length, mass, alcohol, sugar, smoking, exercise, bmi]}
   
 # Create DataFrame
 df_input = pd.DataFrame(data)
@@ -140,10 +138,6 @@ if gdpr_check == 'Yes':
         f'{client_nr}_{date}': [client_nr, date, lifespan_predicted, genetic, length, mass, alcohol, sugar, smoking, exercise]}
 
     df_to_SQL = pd.DataFrame(data_to_save)
-    df_to_SQL.to_sql(f'{client_nr}_{date}', if_exists='replace', con=dbConnection)
-
-# close SQL connection
-dbConnection.close()
 
     # print (df_to_SQL)
 

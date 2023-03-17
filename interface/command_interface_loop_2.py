@@ -104,26 +104,7 @@ def input_q(name):
 # bmi = round(mass/divider)
 # logging.debug(f'bmi: {bmi}')
 
-genetic = input_q ('genetic')
-length = input_q ('length')
-mass = input_q ('mass')
-alcohol = input_q ('alcohol')
-sugar = input_q ('sugar')
-smoking = input_q ('smoking')
-exercise = input_q ('exercise')
-divider = pow(length/100, 2) if length >0 else None
-bmi = round(mass/divider)
-logging.debug(f'bmi: {bmi}')
-
-input_nr = 1
-
-# initialize data of lists.
-data = {'feature': ['genetic', 'length', 'mass', 'alcohol', 'sugar', 'smoking', 'exercise', 'bmi'],
-        f'input_{input_nr}': [genetic, length, mass, alcohol, sugar, smoking, exercise, bmi]}
-  
-# Create DataFrame
-df_input = pd.DataFrame(data)
-
+ 
 
 # multiply the rows of df and df_input for the relevant row. add the interceptor where the data crosses the y-axis. 
 lifespan_predicted = int(sum(df_input['input_1'].multiply(df['coef']))+ df['intercept'][0])
@@ -140,10 +121,6 @@ if gdpr_check == 'Yes':
         f'{client_nr}_{date}': [client_nr, date, lifespan_predicted, genetic, length, mass, alcohol, sugar, smoking, exercise]}
 
     df_to_SQL = pd.DataFrame(data_to_save)
-    df_to_SQL.to_sql(f'{client_nr}_{date}', if_exists='replace', con=dbConnection)
-
-# close SQL connection
-dbConnection.close()
 
     # print (df_to_SQL)
 
