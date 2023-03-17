@@ -20,7 +20,7 @@ from datetime import datetime
 
 
 # open connection to SQLite.db
-dbName = "rest_server/medisch_centrum_randstad/db.sqlite3"
+dbName = "../rest_server/medisch_centrum_randstad/db.sqlite3"
 
 dbConnection = sqlite3.connect(dbName)
 
@@ -121,6 +121,8 @@ logging.debug(f'bmi: {bmi}')
 
 input_nr = 1
 
+
+
 # initialize data of lists.
 data = {'feature': ['genetic', 'length', 'mass', 'alcohol', 'sugar', 'smoking', 'exercise', 'bmi'],
         f'input_{input_nr}': [genetic, length, mass, alcohol, sugar, smoking, exercise, bmi]}
@@ -133,9 +135,13 @@ print('This sessions data has been saved to an SQLite.db')
 # multiply the rows of df and df_input for the relevant row. add the interceptor where the data crosses the y-axis. 
 lifespan_predicted = int(sum(df_input['input_1'].multiply(df['coef']))+ df['intercept'][0])
 
+
 print()
 print(f'the predicted lifespan is: {lifespan_predicted}')
 print ()
+
+# calculate inurance modifier
+premie_factor = round((1-(genetic/lifespan_predicted))*100,2)
 
 # create df to be saved and save it in SQL
 # create date
@@ -166,6 +172,12 @@ def finised ():
     end_programme = input('press any key to show all results and exit the programme.')
     print()
     print (df_input)
+    print()
+    if premie_factor >=0:
+        print(f'With the current lifestile the insurance discount will be: {premie_factor}%')
+    else:
+        print(f'With the current lifestile the insurance premium will be: {-premie_factor}%')
+
     return quit()
 
 
