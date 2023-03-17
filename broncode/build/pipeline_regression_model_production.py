@@ -14,12 +14,12 @@ from os import system
 import pickle
 
 # runs the pipeline to ensure to run regression from the most up to date data.
-system('python broncode/build/pipeline_script_pre_production.py') 
+# system('python broncode/build/pipeline_data_model_production.py') 
 
-#import model data from pipeline, in this case SQLlite in same folder 
-## saving the new df to SQL
+# import model data from pipeline, in this case SQLlite in same folder 
+# saving the new df to SQL
 
-dbName = "rest_server/medisch_centrum_randstad/db.sqlite3"
+dbName = "../rest_server/medisch_centrum_randstad/db.sqlite3"
 # tableName = "df4"
 
 dbConnection = sqlite3.connect(dbName)
@@ -69,7 +69,8 @@ print('Generated coef: succesfully written to SQL database')
 dbConnection.close()
 
 # save traned model to pickle
-pickle.dump(regr,open(regr_model,'wb'))
+with open("regr_model.pkl", "wb") as f:
+    pickle.dump(regr,f)
 
 
 
