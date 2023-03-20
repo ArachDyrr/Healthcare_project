@@ -139,3 +139,6 @@ install/pip/no_conda.txt
 install/pip/requirements.txt
 onderbouwing/~$peline.docx
 .gitignore
+onderbouwing/Ethics.docx
+.gitignore
+teenstrides/interface_redraft.ipynb
